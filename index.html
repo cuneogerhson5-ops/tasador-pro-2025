@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tasador Inmobiliario Pro</title>
+  <link rel="stylesheet" href="style.css" />
+  <meta name="theme-color" content="#0c3b5e" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <div class="logo">🏷️</div>
+      <div class="titles">
+        <h1>Tasador Inmobiliario Pro</h1>
+        <p>Valuación rápida y profesional</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Bloque: Licencia -->
+    <section id="license-section" class="card">
+      <h2>Validación de licencia</h2>
+      <p>Ingresa correo y número de licencia para desbloquear la aplicación.</p>
+      <form id="license-form" class="form-grid">
+        <label>
+          Correo electrónico
+          <input type="email" id="email" placeholder="correo@dominio.com" required />
+        </label>
+        <label>
+          Número de licencia
+          <input type="text" id="licenseId" placeholder="LIC-XXXX-XXXX" required />
+        </label>
+        <button type="submit" class="btn primary">Validar licencia</button>
+      </form>
+      <div id="license-status" class="status"></div>
+    </section>
+
+    <!-- Bloque: Compra semiautomática -->
+    <section id="purchase-section" class="card">
+      <h2>Compra de licencia</h2>
+      <p>Completa el formulario y adjunta el voucher; se generará y enviará tu licencia al correo tras validar el pago.</p>
+      <form id="purchase-form" class="form-grid">
+        <label>
+          Nombres y apellidos
+          <input type="text" id="buyerName" required />
+        </label>
+        <label>
+          Correo para la licencia
+          <input type="email" id="buyerEmail" required />
+        </label>
+        <label>
+          Tipo de documento
+          <select id="buyerDocType" required>
+            <option value="DNI">DNI</option>
+            <option value="CE">CE</option>
+            <option value="RUC">RUC</option>
+          </select>
+        </label>
+        <label>
+          N° documento
+          <input type="text" id="buyerDocId" required />
+        </label>
+        <label>
+          Medio de pago
+          <select id="payMethod" required>
+            <option value="Yape/Plin">Yape/Plin</option>
+            <option value="Transferencia">Transferencia</option>
+            <option value="Tarjeta">Tarjeta</option>
+          </select>
+        </label>
+        <label>
+          Monto pagado (S/)
+          <input type="number" id="amount" min="1" step="0.01" required />
+        </label>
+        <label>
+          Captura del voucher (URL)
+          <input type="url" id="voucherUrl" placeholder="https://..." required />
+        </label>
+        <label>
+          Notas adicionales
+          <textarea id="notes" rows="2" placeholder="Opcional"></textarea>
+        </label>
+        <button type="submit" class="btn success">Enviar y generar licencia</button>
+      </form>
+      <div class="help">
+        <p>Precio de lanzamiento: S/ 50 (licencia válida por 1 año).</p>
+        <p>Se enviará la licencia automática por correo tras registro en el sistema.</p>
+      </div>
+      <div id="purchase-status" class="status"></div>
+    </section>
+
+    <!-- Bloque: App de Tasación -->
+    <section id="app-section" class="card hidden">
+      <h2>Panel de tasación</h2>
+      <div id="welcome" class="welcome"></div>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="depto">Departamento</button>
+        <button class="tab-btn" data-tab="casa">Casa</button>
+        <button class="tab-btn" data-tab="terreno">Terreno</button>
+      </div>
+
+      <!-- Departamento -->
+      <div id="tab-depto" class="tab-panel active">
+        <form id="form-depto" class="form-grid">
+          <label>
+            Distrito
+            <select id="depto-distrito" required></select>
+          </label>
+          <label>
+            Subzona
+            <select id="depto-subzona" required></select>
+          </label>
+          <label>
+            Área techada (m²)
+            <input type="number" id="depto-area-techada" min="0" step="0.01" required />
+          </label>
+          <label>
+            Área libre (m²)
+            <input type="number" id="depto-area-libre" min="0" step="0.01" value="0" />
+          </label>
+          <label>
+            Dormitorios
+            <input type="number" id="depto-dorms" min="0" step="1" required />
+          </label>
+          <label>
+            Piso
+            <input type="number" id="depto-piso" min="1" step="1" required />
+          </label>
+          <label>
+            Ascensor
+            <select id="depto-ascensor" required>
+              <option value="si">Sí</option>
+              <option value="no">No</option>
+            </select>
+          </label>
+          <label>
+            Condición
+            <select id="depto-condicion" required>
+              <option>Nuevo</option>
+              <option>Bueno</option>
+              <option>Regular</option>
+              <option>Para remodelar</option>
+            </select>
+          </label>
+          <label>
+            Antigüedad (años)
+            <input type="number" id="depto-antig" min="0" step="1" required />
+          </label>
+          <button type="submit" class="btn primary">Calcular</button>
+        </form>
+        <div id="depto-result" class="result"></div>
+      </div>
+
+      <!-- Casa -->
+      <div id="tab-casa" class="tab-panel">
+        <form id="form-casa" class="form-grid">
+          <label>
+            Distrito
+            <select id="casa-distrito" required></select>
+          </label>
+          <label>
+            Subzona
+            <select id="casa-subzona" required></select>
+          </label>
+          <label>
+            Área techada (m²)
+            <input type="number" id="casa-area-techada" min="0" step="0.01" required />
+          </label>
+          <label>
+            Área libre (m²)
+            <input type="number" id="casa-area-libre" min="0" step="0.01" value="0" />
+          </label>
+          <label>
+            Dormitorios
+            <input type="number" id="casa-dorms" min="0" step="1" required />
+          </label>
+          <label>
+            Condición
+            <select id="casa-condicion" required>
+              <option>Nuevo</option>
+              <option>Bueno</option>
+              <option>Regular</option>
+              <option>Para remodelar</option>
+            </select>
+          </label>
+          <label>
+            Antigüedad (años)
+            <input type="number" id="casa-antig" min="0" step="1" required />
+          </label>
+          <button type="submit" class="btn primary">Calcular</button>
+        </form>
+        <div id="casa-result" class="result"></div>
+      </div>
+
+      <!-- Terreno -->
+      <div id="tab-terreno" class="tab-panel">
+        <form id="form-terreno" class="form-grid">
+          <label>
+            Distrito
+            <select id="terreno-distrito" required></select>
+          </label>
+          <label>
+            Subzona
+            <select id="terreno-subzona" required></select>
+          </label>
+          <label>
+            Área total (m²)
+            <input type="number" id="terreno-area" min="0" step="0.01" required />
+          </label>
+          <label>
+            Antigüedad del terreno (años)
+            <input type="number" id="terreno-antig" min="0" step="1" value="0" required />
+          </label>
+          <button type="submit" class="btn primary">Calcular</button>
+        </form>
+        <div id="terreno-result" class="result"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>© Tasador Inmobiliario Pro — Licencia anual</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
