@@ -1,10 +1,9 @@
 function doGet(e) {
-var action = (e && e.parameter && e.parameter.action) ? e.parameter.action : '';
-if (action === 'tariffs') return getTariffs_();
-if (action === 'validate') return validateLicense_(e);
-return json_({ error: 'Missing or invalid action' });
+var action = (e && e.parameter && e.parameter.action) ? String(e.parameter.action).trim().toLowerCase() : "";
+if (action === "tariffs") return getTariffs_();
+if (action === "validate") return validateLicense_(e);
+return json_({ error: "unknown action" });
 }
-
 function getTariffs_() {
 var ss = SpreadsheetApp.getActive();
 var sh = ss.getSheetByName('tariafs');
@@ -101,3 +100,4 @@ return Utilities.formatDate(d, Session.getScriptTimeZone(), 'yyyy-MM-dd');
 return '';
 }
 }
+
